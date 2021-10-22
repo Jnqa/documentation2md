@@ -33,7 +33,7 @@ runs:
       run: |
         mkdir -p ./doxygen_act/
         cp ${{ inputs.inputdir }}/* ./doxygen_act/
-        cp ./Doxyfile ./doxygen_act/
+        cp ${{ github.action_path }}/Doxyfile ./doxygen_act/
         pushd ./doxygen_act/
         doxygen Doxyfile
         popd
