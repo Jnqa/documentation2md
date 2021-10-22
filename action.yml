@@ -5,6 +5,10 @@ inputs:
     description: 'directory with files'
     requred: true
     default: './test/'
+  mdpath:
+    description: 'where will be md file'
+    requred: true
+    default: './docs/'
   mdname:
     description: 'name md file'
     requred: true
@@ -16,10 +20,6 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    # - name: Setup Node.js
-    #   uses: actions/setup-node@v1
-    #   with:
-    #     node-version: '12.x'
 
     - name: install doxygen
       run: sudo apt install doxygen -y

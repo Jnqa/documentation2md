@@ -21,11 +21,16 @@ jobs:
       uses: Jnqa/documentation2md@main
       id: makemd
       with:
-        inputdir: ./test/
+        inputdir: test
         mdname: messages.md
 
     - name: test 1
-      run: |
-        ls .
-        ls ./doxygen_act/
-        cat ./doxygen_act/*
+      run: cat ./doxygen_act/*
+
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        branch: documentation
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        commit-message: add documentation
+        title: 🆕 New doc file ${{ steps.makemd.outputs.mdfile }}
