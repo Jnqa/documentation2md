@@ -24,7 +24,7 @@ jobs:
         inputdir: ./test/
         mdname: messages.md
 
-    - name: test
+    - name: test 1
       run: |
         ls .
         ls ./doxygen_act/
