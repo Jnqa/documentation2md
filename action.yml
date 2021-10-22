@@ -48,8 +48,8 @@ runs:
         rm -R ./xml/
         cat ./result/*.md >> ${{ inputs.mdname }}
         rm -R ./result/
-        mkdir -p ${{ inputs.mdpath }}
         popd
+        mkdir -p ${{ inputs.mdpath }}
         mv ./doxygen_act/${{ inputs.mdname }} ./${{ inputs.mdpath }}/${{ inputs.mdname }}
         rm -R ./doxygen_act/
         MDFILE=./${{ inputs.mdpath }}/${{inputs.mdname}}
