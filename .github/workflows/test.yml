@@ -20,7 +20,7 @@ jobs:
         node-version: '12.x'
       
     - name: Make md file
-      uses: Jnqa/documentation2md@main
+      uses: Jnqa/documentation2md@v1
       id: makemd
       with:
         inputdir: test
@@ -34,12 +34,3 @@ jobs:
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         commit-message: add documentation
         title: 🆕 New doc file ${{ steps.makemd.outputs.mdfile }}
-    
-    - name: debug
-      if: failure()
-      run: |
-        ls .
-        echo "### doxygen_act"
-        ls ./doxygen_act/
-        echo "### docs"
-        ls ./docs
