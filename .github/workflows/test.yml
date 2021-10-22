@@ -27,6 +27,11 @@ jobs:
         mdpath: docs
         mdname: messages.md
 
+    - name: echo TEST
+      run: |
+        echo ${{ steps.makemd.outputs.mdfile }} 
+        cat ${{ steps.makemd.outputs.mdfile }} 
+
     - name: Create pull request
       uses: peter-evans/create-pull-request@v3
       with:

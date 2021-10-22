@@ -12,6 +12,7 @@ A GitHub action to create a md file for your repository from files with using [X
       # Make changes here
     - name: MakeMD
       uses: Jnqa/documentation2md@v1
+      id: makemd
       with:
         inputdir: test
         mdpath: docs
@@ -25,3 +26,21 @@ A GitHub action to create a md file for your repository from files with using [X
 | `inputdir` | Documentation files directory using [XML documentation comments](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/). | `-` |
 | `mdpath` | Path to save md file. | `docs` |
 | `mdname` | MD filename. | `messages.md` |
+
+Аfter executing the action, a file will be created in the specified directory. next step you can apply it
+(e.g. /docs/messages.md)
+
+### Action outputs
+
+| Name | Description | Example |
+| --- | --- | --- |
+| `mdfile` | Path to md file | `/docs/messages.md` |
+
+
+```yml
+      # Use it as you want
+    - name: ReadMD
+      run: |
+        cat ${{ steps.makemd.outputs.mdfile }}
+```
+
