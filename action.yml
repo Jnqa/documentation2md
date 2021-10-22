@@ -1,0 +1,56 @@
+name: 'Creating documentation in md format'
+description: 'no description'
+inputs:
+  inputdir:
+    description: 'directory with files'
+    requred: true
+    default: './test/'
+  mdname:
+    description: 'name md file'
+    requred: true
+    default: 'README.md'
+outputs:
+  mdfile: 
+    description: "md file"
+    value: ${{ steps.mdfile.outputs.mdfile }}
+runs:
+  using: "composite"
+  steps: 
+    # - name: Setup Node.js
+    #   uses: actions/setup-node@v1
+    #   with:
+    #     node-version: '12.x'
+
+    - name: install doxygen
+      run: apt install doxygen -y
+      shell: bash
+
+    - name: instaill doxygen2markdown
+      run: npm i -g doxygen2markdown
+      shell: bash
+
+    - name: Make xml files
+      run: |
+        mv ${{ inputs.inputdir }}/* ./doxygen_act/
+        pushd ./doxygen_act/
+        doxygen Doxyfile
+        popd
+      shell: bash
+
+    - name: Make md file
+      id: mdfile
+      run: |
+        pushd ./doxygen_act/
+        mkdir ./result/
+        doxygen2markdown -d ./xml/ -o ./result/
+        rm -R ./xml/
+        cat ./result/*.md >> ${{ inputs.mdname }}
+        rm -R ./result/
+        MDFILE=${{inputs.mdname}}
+        echo "::set-output name=mdfile::$(echo $MDFILE)"
+        popd
+      shell: bash
+
+    - name: REPORT
+      run: echo "REPORT" && cat ./doxygen_act/${{ inputs.mdname }}
+      shell: bash
