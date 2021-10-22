@@ -49,9 +49,9 @@ runs:
         cat ./result/*.md >> ${{ inputs.mdname }}
         rm -R ./result/
         mkdir -p ${{ inputs.mdpath }}
+        popd
         mv ./doxygen_act/${{ inputs.mdname }} ./${{ inputs.mdpath }}/${{ inputs.mdname }}
         rm -R ./doxygen_act/
         MDFILE=./${{ inputs.mdpath }}/${{inputs.mdname}}
         echo "::set-output name=mdfile::$(echo $MDFILE)"
-        popd
       shell: bash
