@@ -4,7 +4,7 @@ inputs:
   inputdir:
     description: 'directory with files'
     requred: true
-    default: './test/'
+    default: 'test'
   mdpath:
     description: 'where will be md file'
     requred: true
@@ -31,7 +31,8 @@ runs:
 
     - name: Make xml files
       run: |
-        mv ${{ inputs.inputdir }}/* ./doxygen_act/
+        cp ${{ inputs.inputdir }}/* ./doxygen_act/
+        cp ./Doxyfile ./doxygen_act/
         pushd ./doxygen_act/
         doxygen Doxyfile
         popd
@@ -46,11 +47,10 @@ runs:
         rm -R ./xml/
         cat ./result/*.md >> ${{ inputs.mdname }}
         rm -R ./result/
-        MDFILE=${{inputs.mdname}}
+        mkdir -p ${{ inputs.mdpath }}
+        mv ./doxygen_act/${{ inputs.mdname }} ./${{ inputs.mdpath }}/${{ inputs.mdname }}
+        rm -R ./doxygen_act/
+        MDFILE=./${{ inputs.mdpath }}/${{inputs.mdname}}
         echo "::set-output name=mdfile::$(echo $MDFILE)"
         popd
-      shell: bash
-
-    - name: REPORT
-      run: echo "REPORT" && cat ./doxygen_act/${{ inputs.mdname }}
       shell: bash
