@@ -22,7 +22,7 @@ runs:
     #     node-version: '12.x'
 
     - name: install doxygen
-      run: apt install doxygen -y
+      run: sudo apt install doxygen -y
       shell: bash
 
     - name: instaill doxygen2markdown
