@@ -31,6 +31,7 @@ runs:
 
     - name: Make xml files
       run: |
+        mkdir -p ./doxygen_act/
         cp ${{ inputs.inputdir }}/* ./doxygen_act/
         cp ./Doxyfile ./doxygen_act/
         pushd ./doxygen_act/
@@ -42,7 +43,7 @@ runs:
       id: mdfile
       run: |
         pushd ./doxygen_act/
-        mkdir ./result/
+        mkdir -p ./result/
         doxygen2markdown -d ./xml/ -o ./result/
         rm -R ./xml/
         cat ./result/*.md >> ${{ inputs.mdname }}
